@@ -1,0 +1,491 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard | Pace Computers Education</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fc;
+      color: #1c2940;
+    }
+
+    header {
+      padding: 20px 6%;
+      background: #193b85;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    button {
+      padding: 11px 17px;
+      border: 0;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    #logoutButton {
+      background: white;
+      color: #193b85;
+      font-weight: bold;
+    }
+
+    #logoutButton:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    main {
+      max-width: 950px;
+      margin: 35px auto;
+      padding: 0 18px;
+    }
+
+    .welcome {
+      margin-bottom: 25px;
+    }
+
+    .welcome p {
+      color: #68738a;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      padding: 23px;
+      border-radius: 14px;
+      box-shadow: 0 5px 18px #16284a0b;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 15px;
+      color: #64718a;
+    }
+
+    .value {
+      font-size: 19px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    #message {
+      padding: 14px;
+      border-radius: 8px;
+      background: white;
+      line-height: 1.6;
+    }
+
+    .section-title {
+      margin: 30px 0 16px;
+      font-size: 21px;
+    }
+
+    .course-card {
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 5px 18px #16284a0b;
+      border-top: 4px solid #2458d3;
+    }
+
+    .course-card h3 {
+      margin-top: 0;
+      color: #193b85;
+      font-size: 23px;
+    }
+
+    .course-card p {
+      line-height: 1.7;
+      color: #526079;
+      overflow-wrap: anywhere;
+    }
+
+    .course-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .course-info div {
+      padding: 15px;
+      background: #f3f6fc;
+      border-radius: 9px;
+    }
+
+    .course-info strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #64718a;
+      font-size: 13px;
+    }
+
+    .course-info span {
+      overflow-wrap: anywhere;
+      line-height: 1.5;
+    }
+
+    .home-link {
+      display: inline-block;
+      margin: 25px 0;
+      color: #2458d3;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 480px) {
+      main {
+        margin-top: 24px;
+      }
+
+      .card,
+      .course-card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Pace Computers Education</h1>
+    <button id="logoutButton" type="button">Sign Out</button>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <h1 id="welcomeHeading">Student Dashboard</h1>
+      <p>
+        View your student information, registration status and course details.
+      </p>
+    </section>
+
+    <p id="message" role="status" aria-live="polite">
+      Checking your login...
+    </p>
+
+    <section class="grid" id="profileGrid" hidden>
+      <article class="card">
+        <h2>Full Name</h2>
+        <div class="value" id="studentName">—</div>
+      </article>
+
+      <article class="card">
+        <h2>Email Address</h2>
+        <div class="value" id="studentEmail">—</div>
+      </article>
+
+      <article class="card">
+        <h2>Phone Number</h2>
+        <div class="value" id="studentPhone">Not provided</div>
+      </article>
+
+      <article class="card">
+        <h2>Approval Status</h2>
+        <div class="value" id="approvalStatus">Pending</div>
+      </article>
+
+      <article class="card">
+        <h2>Requested Course</h2>
+        <div class="value" id="courseName">Not available yet</div>
+      </article>
+    </section>
+
+    <section id="courseSection" hidden>
+      <h2 class="section-title">Your Course Details</h2>
+
+      <article class="course-card">
+        <h3 id="courseTitle">Course Details</h3>
+
+        <p id="courseDescription">
+          Course description is not available yet.
+        </p>
+
+        <div class="course-info">
+          <div>
+            <strong>Batch Timings</strong>
+            <span id="courseTimings">Not announced yet</span>
+          </div>
+
+          <div>
+            <strong>Course Start Date</strong>
+            <span id="courseStartDate">Not announced yet</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <a class="home-link" href="index.html">Back to Home</a>
+  </main>
+
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL =
+      "https://auorbiuxztgpuasfqzlw.supabase.co";
+
+    // Put your existing publishable key here.
+    // Never use a service_role or secret key in this file.
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_InQQGNuZArb3c11_xEa_Ag_Sr_yJPGB";
+
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const message = document.getElementById("message");
+    const grid = document.getElementById("profileGrid");
+    const courseSection = document.getElementById("courseSection");
+    const logoutButton = document.getElementById("logoutButton");
+
+    function findField(record, possibleNames) {
+      if (!record) return null;
+
+      for (const name of possibleNames) {
+        const matchingKey = Object.keys(record).find(
+          key => key.toLowerCase() === name.toLowerCase()
+        );
+
+        if (matchingKey && record[matchingKey] != null &&
+            String(record[matchingKey]).trim() !== "") {
+          return record[matchingKey];
+        }
+      }
+
+      return null;
+    }
+
+    function displayDate(value) {
+      if (!value) return "Not announced yet";
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return String(value);
+      }
+
+      return date.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+    }
+
+    async function loadCourseDetails(courseName) {
+      courseSection.hidden = true;
+
+      if (!courseName) return;
+
+      const { data: courses, error } = await supabase
+        .from("pace_courses")
+        .select("*");
+
+      if (error) {
+        console.error("Course details error:", error);
+        document.getElementById("courseTitle").textContent = courseName;
+        document.getElementById("courseDescription").textContent =
+          "Course details could not be loaded. Please try again later.";
+        document.getElementById("courseTimings").textContent =
+          "Not available";
+        document.getElementById("courseStartDate").textContent =
+          "Not available";
+        courseSection.hidden = false;
+        return;
+      }
+
+      const course = (courses || []).find(item => {
+        const name = findField(item, [
+          "course_name",
+          "name",
+          "title",
+          "course_title"
+        ]);
+
+        return name &&
+          String(name).trim().toLowerCase() ===
+          String(courseName).trim().toLowerCase();
+      });
+
+      document.getElementById("courseTitle").textContent =
+        courseName;
+
+      if (!course) {
+        document.getElementById("courseDescription").textContent =
+          "Additional course information has not been configured yet.";
+        document.getElementById("courseTimings").textContent =
+          "Not announced yet";
+        document.getElementById("courseStartDate").textContent =
+          "Not announced yet";
+        courseSection.hidden = false;
+        return;
+      }
+
+      const description = findField(course, [
+        "description",
+        "course_description",
+        "details",
+        "course_details"
+      ]);
+
+      const timings = findField(course, [
+  "timing",
+  "batch_timings",
+  "timings",
+  "course_timings",
+  "class_timing",
+  "schedule"
+]);
+      const startDate = findField(course, [
+        "start_date",
+        "course_start_date",
+        "batch_start_date"
+      ]);
+
+      document.getElementById("courseDescription").textContent =
+        description || "Course description has not been added yet.";
+
+      document.getElementById("courseTimings").textContent =
+        timings || "Not announced yet";
+
+      document.getElementById("courseStartDate").textContent =
+startDate
+  ? (String(startDate).includes("Contact us")
+      ? String(startDate)
+      : displayDate(startDate))
+  : "Not announced yet";
+      courseSection.hidden = false;
+    }
+
+    async function loadDashboard() {
+      message.textContent = "Checking your login...";
+
+      const { data: authData, error: authError } =
+        await supabase.auth.getUser();
+
+      if (authError || !authData.user) {
+        message.textContent =
+          "You are not signed in. Redirecting to student login...";
+
+        setTimeout(() => {
+          window.location.replace("pace-student-login.html");
+        }, 2000);
+
+        return;
+      }
+
+      const user = authData.user;
+
+      message.textContent = "Loading your student profile...";
+
+      const { data: student, error: profileError } =
+        await supabase
+          .from("pace_students")
+          .select(
+            "full_name, email, phone, approval_status, requested_course"
+          )
+          .eq("user_id", user.id)
+          .maybeSingle();
+
+      if (profileError) {
+        console.error("Student profile error:", profileError);
+
+        message.textContent =
+          "Unable to load your profile. Please check your connection or contact the administrator.";
+
+        return;
+      }
+
+      if (!student) {
+        message.textContent =
+          "Your student profile has not been created yet. Please contact the institute administrator.";
+
+        return;
+      }
+
+      document.getElementById("welcomeHeading").textContent =
+        `Welcome, ${student.full_name || "Student"}!`;
+
+      document.getElementById("studentName").textContent =
+        student.full_name || "Not provided";
+
+      document.getElementById("studentEmail").textContent =
+        student.email || user.email || "Not provided";
+
+      document.getElementById("studentPhone").textContent =
+        student.phone || "Not provided";
+
+      document.getElementById("courseName").textContent =
+        student.requested_course || "Not available yet";
+
+      document.getElementById("approvalStatus").textContent =
+        student.approval_status || "Pending";
+
+      if (student.approval_status === "approved") {
+        message.textContent =
+          "Your registration has been approved.";
+      } else if (student.approval_status === "rejected") {
+        message.textContent =
+          "Your registration has not been approved. Please contact the institute.";
+      } else {
+        message.textContent =
+          "Your registration is awaiting administrator approval.";
+      }
+
+      grid.hidden = false;
+
+      await loadCourseDetails(student.requested_course);
+    }
+
+    logoutButton.addEventListener("click", async () => {
+      logoutButton.disabled = true;
+      message.textContent = "Signing out...";
+
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        console.error("Sign-out error:", error);
+        message.textContent = "Unable to sign out. Please try again.";
+        logoutButton.disabled = false;
+        return;
+      }
+
+      window.location.replace("pace-student-login.html");
+    });
+
+    loadDashboard().catch(error => {
+      console.error("Dashboard error:", error);
+      message.textContent =
+        "Something went wrong while loading your dashboard. Please refresh the page.";
+    });
+  </script>
+</body>
+</html>

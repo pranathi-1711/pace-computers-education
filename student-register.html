@@ -6,261 +6,269 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Registration | Pace Computers Education</title>
 
-    <link rel="stylesheet" href="pace-design.css">
-
     <style>
-        .pace-register-page {
-            max-width: 520px;
-            margin: 45px auto;
-            padding: 28px;
-            background: #ffffff;
-            border-radius: 14px;
-            box-shadow: 0 5px 24px rgba(0, 0, 0, 0.10);
-        }
-
-        .pace-register-page h1 {
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        .pace-register-subtitle {
-            text-align: center;
-            margin-bottom: 24px;
-            color: #666;
-        }
-
-        .pace-register-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .pace-register-form label {
-            font-weight: 600;
-            margin-bottom: -8px;
-        }
-
-        .pace-register-form input,
-        .pace-register-form select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-            font-size: 15px;
+        * {
             box-sizing: border-box;
         }
 
-        .pace-register-button {
+        body {
+            margin: 0;
+            padding: 30px 16px;
+            font-family: Arial, sans-serif;
+            background: #f1f5fb;
+            color: #1c2940;
+        }
+
+        .register-container {
+            max-width: 480px;
+            margin: 20px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(20, 45, 90, 0.1);
+        }
+
+        .brand {
+            text-align: center;
+            color: #193b85;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+            text-align: center;
+            font-size: 25px;
+        }
+
+        .subtitle {
+            margin-bottom: 25px;
+            text-align: center;
+            color: #68738a;
+            line-height: 1.5;
+        }
+
+        label {
+            display: block;
+            margin: 16px 0 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd5e3;
+            border-radius: 7px;
+            font-size: 15px;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            outline: 2px solid #b6caff;
+            border-color: #2458d3;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 24px;
             padding: 13px;
             border: none;
             border-radius: 7px;
-            background: #174ea6;
+            background: #193b85;
             color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
         }
 
-        .pace-register-button:disabled {
-            opacity: 0.6;
+        button:disabled {
+            opacity: 0.65;
             cursor: not-allowed;
         }
 
-        .pace-register-message {
-            text-align: center;
-            margin-top: 16px;
+        #registerMessage {
+            display: none;
+            margin-top: 18px;
+            padding: 12px;
+            border-radius: 7px;
             line-height: 1.5;
+            overflow-wrap: anywhere;
         }
 
-        .pace-register-login {
+        #registerMessage.visible {
+            display: block;
+        }
+
+        #registerMessage.success {
+            color: #155724;
+            background: #e8f5e9;
+        }
+
+        #registerMessage.error {
+            color: #842029;
+            background: #f8d7da;
+        }
+
+        .login-link {
+            margin-top: 22px;
             text-align: center;
-            margin-top: 20px;
+            font-size: 14px;
         }
 
-        @media (max-width: 600px) {
-            .pace-register-page {
-                margin: 20px 12px;
-                padding: 22px;
+        a {
+            color: #2458d3;
+        }
+
+        @media (max-width: 500px) {
+            .register-container {
+                padding: 23px 19px;
             }
         }
     </style>
 </head>
 
 <body>
-    <main class="pace-register-page">
-        <h1>Student Registration</h1>
-        <p class="pace-register-subtitle">
-            Join Pace Computers Education
-        </p>
+    <main class="register-container">
+        <div class="brand">Pace Computers Education</div>
 
-        <form id="paceStudentRegisterForm" class="pace-register-form">
-            <label for="paceStudentName">Full Name</label>
+        <h1>Student Registration</h1>
+
+        <p class="subtitle">Join Pace Computers Education</p>
+
+        <form id="paceRegisterForm">
+            <label for="fullName">Full Name</label>
             <input
                 type="text"
-                id="paceStudentName"
-                autocomplete="name"
+                id="fullName"
+                name="fullName"
                 placeholder="Enter your full name"
+                autocomplete="name"
                 required
-                maxlength="100"
             >
 
-            <label for="paceStudentEmail">Email Address</label>
+            <label for="email">Email Address</label>
             <input
                 type="email"
-                id="paceStudentEmail"
+                id="email"
+                name="email"
+                placeholder="Enter your email address"
                 autocomplete="email"
-                placeholder="Enter your email"
                 required
             >
 
-            <label for="paceStudentPhone">Phone Number</label>
+            <label for="phone">Phone Number</label>
             <input
                 type="tel"
-                id="paceStudentPhone"
-                autocomplete="tel"
+                id="phone"
+                name="phone"
                 placeholder="Enter your phone number"
-                required
-                maxlength="20"
+                autocomplete="tel"
             >
 
-            <label for="paceStudentCourse">Select Course</label>
-            <select id="paceStudentCourse" required>
-                <option value="">Loading courses...</option>
+            <label for="course">Select Course</label>
+            <select id="course" name="course" required>
+                <option value="">Choose a course</option>
+                <option value="Advanced Python">Advanced Python</option>
+                <option value="C Language">C Language</option>
+                <option value="DCA">DCA</option>
+                <option value="HTML">HTML</option>
+                <option value="Python">Python</option>
+                <option value="SQL">SQL</option>
+                <option value="Tally">Tally</option>
             </select>
 
-            <label for="paceStudentPassword">Password</label>
+            <label for="password">Password</label>
             <input
                 type="password"
-                id="paceStudentPassword"
-                autocomplete="new-password"
+                id="password"
+                name="password"
                 placeholder="Create a password"
+                autocomplete="new-password"
                 minlength="8"
                 required
             >
 
-            <label for="paceStudentConfirmPassword">Confirm Password</label>
+            <label for="confirmPassword">Confirm Password</label>
             <input
                 type="password"
-                id="paceStudentConfirmPassword"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Enter your password again"
                 autocomplete="new-password"
-                placeholder="Re-enter your password"
                 minlength="8"
                 required
             >
 
-            <button
-                type="submit"
-                id="paceStudentRegisterButton"
-                class="pace-register-button"
-            >
+            <button type="submit" id="registerButton">
                 Create Student Account
             </button>
         </form>
 
-        <p
-            id="paceStudentRegisterMessage"
-            class="pace-register-message"
-            role="status"
-            aria-live="polite"
-        ></p>
+        <div id="registerMessage" role="status" aria-live="polite"></div>
 
-        <p class="pace-register-login">
+        <p class="login-link">
             Already registered?
             <a href="pace-student-login.html">Student Login</a>
         </p>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module">
+        import { createClient } from
+            "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-    <script>
-        const PACE_SUPABASE_URL =
+        const SUPABASE_URL =
             "https://auorbiuxztgpuasfqzlw.supabase.co";
 
-        // Use the same existing publishable key as pace-main.js.
-        const PACE_SUPABASE_PUBLISHABLE_KEY =
+        const SUPABASE_PUBLISHABLE_KEY =
             "sb_publishable_InQQGNuZArb3c11_xEa_Ag_Sr_yJPGB";
 
-        const paceStudentDb = window.supabase.createClient(
-            PACE_SUPABASE_URL,
-            PACE_SUPABASE_PUBLISHABLE_KEY
+        const paceStudentDb = createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
         );
 
         const paceRegisterForm =
-            document.getElementById("paceStudentRegisterForm");
-
-        const paceRegisterMessage =
-            document.getElementById("paceStudentRegisterMessage");
+            document.getElementById("paceRegisterForm");
 
         const paceRegisterButton =
-            document.getElementById("paceStudentRegisterButton");
+            document.getElementById("registerButton");
 
-        const paceCourseSelect =
-            document.getElementById("paceStudentCourse");
+        const registerMessage =
+            document.getElementById("registerMessage");
 
         function showPaceRegisterMessage(message, isError = false) {
-            paceRegisterMessage.textContent = message;
-            paceRegisterMessage.style.color = isError
-                ? "#b42318"
-                : "#16753b";
+            registerMessage.textContent = message;
+            registerMessage.className =
+                "visible " + (isError ? "error" : "success");
         }
 
-        async function loadPaceRegistrationCourses() {
-            const { data, error } = await paceStudentDb
-                .from("pace_courses")
-                .select("id, name")
-                .eq("is_active", true)
-                .order("name");
-
-            if (error) {
-                paceCourseSelect.innerHTML =
-                    '<option value="">Could not load courses</option>';
-
-                showPaceRegisterMessage(
-                    "Unable to load courses. Please refresh the page.",
-                    true
-                );
-                return;
-            }
-
-            paceCourseSelect.innerHTML =
-                '<option value="">Choose a course</option>';
-
-            for (const course of data) {
-                const option = document.createElement("option");
-                option.value = course.id;
-                option.textContent = course.name;
-                paceCourseSelect.appendChild(option);
-            }
-
-            if (data.length === 0) {
-                paceCourseSelect.innerHTML =
-                    '<option value="">No courses currently available</option>';
-            }
-        }
-
-        paceRegisterForm.addEventListener("submit", async function (event) {
+        paceRegisterForm.addEventListener("submit", async (event) => {
             event.preventDefault();
 
             const fullName =
-                document.getElementById("paceStudentName").value.trim();
+                document.getElementById("fullName").value.trim();
 
             const email =
-                document.getElementById("paceStudentEmail").value.trim();
+                document.getElementById("email").value.trim();
 
             const phone =
-                document.getElementById("paceStudentPhone").value.trim();
+                document.getElementById("phone").value.trim();
 
-            const courseId = paceCourseSelect.value;
+            const course =
+                document.getElementById("course").value;
 
             const password =
-                document.getElementById("paceStudentPassword").value;
+                document.getElementById("password").value;
 
             const confirmPassword =
-                document.getElementById("paceStudentConfirmPassword").value;
+                document.getElementById("confirmPassword").value;
 
-            if (!fullName || !email || !phone || !courseId) {
+            if (password !== confirmPassword) {
                 showPaceRegisterMessage(
-                    "Please complete all fields and select a course.",
+                    "Passwords do not match. Please check them.",
                     true
                 );
                 return;
@@ -268,81 +276,75 @@
 
             if (password.length < 8) {
                 showPaceRegisterMessage(
-                    "Password must contain at least 8 characters.",
+                    "Your password must contain at least 8 characters.",
                     true
                 );
                 return;
             }
 
-            if (password !== confirmPassword) {
+            if (!course) {
                 showPaceRegisterMessage(
-                    "Passwords do not match.",
+                    "Please select a course.",
                     true
                 );
                 return;
             }
 
             paceRegisterButton.disabled = true;
-            paceRegisterButton.textContent = "Creating account...";
-
-            showPaceRegisterMessage("");
+            paceRegisterButton.textContent = "Creating Account...";
 
             try {
-                const { data, error } = await paceStudentDb.auth.signUp({
-                    email: email,
-                    password: password,
-                    options: {
-                        data: {
-                            full_name: fullName
+                const { data, error } =
+                    await paceStudentDb.auth.signUp({
+                        email: email,
+                        password: password,
+                        options: {
+                            data: {
+                                full_name: fullName,
+                                phone: phone,
+                                requested_course: course
+                            }
                         }
-                    }
-                });
+                    });
 
                 if (error) {
                     throw error;
                 }
 
-                if (data.session && data.user) {
-                    const { error: profileError } = await paceStudentDb
-                        .from("pace_students")
-                        .insert({
-                            user_id: data.user.id,
-                            full_name: fullName,
-                            email: email,
-                            phone: phone,
-                            approval_status: "pending"
-                        });
-
-                    if (profileError) {
-                        showPaceRegisterMessage(
-                            "Your account was created, but the student profile could not be saved. Please contact the institute before registering again.",
-                            true
-                        );
-                        return;
-                    }
-
+                if (!data.user) {
                     showPaceRegisterMessage(
-                        "Registration submitted! Your account is awaiting admin approval. Course selection will be connected to your registration after the database setup."
+                        "Supabase did not return an account. Please try again.",
+                        true
                     );
+                    return;
+                }
 
-                    paceRegisterForm.reset();
+                if (data.session) {
+                    showPaceRegisterMessage(
+                        "Your account was created successfully. Your student profile is handled by the database trigger. Your registration is awaiting administrator approval."
+                    );
                 } else {
                     showPaceRegisterMessage(
-                        "Account created. Please check your email and confirm your address. Your student profile and course request still need to be completed after verification."
+                        "Your account was created. Email confirmation may be required before you can sign in. If no confirmation email arrives, contact the administrator."
                     );
                 }
+
+                paceRegisterForm.reset();
+
             } catch (error) {
+                console.error("Registration error:", error);
+
                 showPaceRegisterMessage(
-                    error.message || "Registration failed. Please try again.",
+                    error.message ||
+                    "Registration failed. Please try again.",
                     true
                 );
             } finally {
                 paceRegisterButton.disabled = false;
-                paceRegisterButton.textContent = "Create Student Account";
+                paceRegisterButton.textContent =
+                    "Create Student Account";
             }
         });
-
-        loadPaceRegistrationCourses();
     </script>
 </body>
 </html>
